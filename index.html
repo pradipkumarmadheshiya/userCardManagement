@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Card Management</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif, Arial, Helvetica;
+            box-sizing: border-box;
+        }
+        #home-cart{
+            display: flex;
+            justify-content: space-evenly;
+            background-color: rgb(255, 163, 214);
+            padding: 15px;;
+        }
+        #home{
+            font-size: 18px;
+            color: white;
+            text-decoration: underline;
+        }
+        #cart{
+            font-size: 18px;
+            color: white;
+            text-decoration: underline;
+        }
+        .boxes{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+        .box{
+            width: 300px;
+            box-shadow: 2px 3px 12px 0 grey;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        button{
+            margin-top: 12px;
+            color: #fff;
+            background-color: hotpink;
+            border: none;
+            padding: 4px 6px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .box>p:nth-child(2){
+            margin-top: 6px;
+        }
+        .box>p:nth-child(3){
+            margin-top: 6px;
+        }
+        span{
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div id="home-cart">
+        <a id="home" href="index.html">Home</a>
+        <a id="cart" href="cart.html">Cart</a>
+    </div>
+    <div class="boxes">
+    </div>
+</body>
+</html>
+
+<script>
+    let user = [
+        {
+            id: 1,
+            name: "Leanne Graham",
+            username: "Bret",
+            email: "Sincere@april.biz",
+        },
+        {
+            id: 2,
+            name: "Ervin Howell",
+            username: "Antonette",
+            email: "Shanna@melissa.tv",
+        },
+        {
+            id: 3,
+            name: "Clementine Bauch",
+            username: "Samantha",
+            email: "Nathan@yesenia.net",
+        },
+        {
+            id: 4,
+            name: "Patricia Lebsack",
+            username: "Karianne",
+            email: "Julianne.OConner@kory.org",
+        },
+        {
+            id: 5,
+            name: "Chelsey Dietrich",
+            username: "Kamren",
+            email: "Lucio_Hettinger@annie.ca",
+        },
+        {
+            id: 6,
+            name: "Mrs. Dennis Schulist",
+            username: "Leopoldo_Corkery",
+            email: "Karley_Dach@jasper.info",
+        },
+        {
+            id: 7,
+            name: "Kurtis Weissnat",
+            username: "Elwyn.Skiles",
+            email: "Telly.Hoeger@billy.biz",
+        },
+        {
+            id: 8,
+            name: "Nicholas Runolfsdottir V",
+            username: "Maxime_Nienow",
+            email: "Sherwood@rosamond.me",
+        },
+        {
+            id: 9,
+            name: "Glenna Reichert",
+            username: "Delphine",
+            email: "Chaim_McDermott@dana.io",
+        },
+        {
+            id: 10,
+            name: "Clementina DuBuque",
+            username: "Moriah.Stanton",
+            email: "Rey.Padberg@karina.biz",
+        },
+    ];
+
+    const boxes=document.getElementsByClassName("boxes")[0]
+    
+    user.forEach((el)=>{
+        
+        const box=document.createElement("div")
+        
+        box.innerHTML=
+        `<p>Name: <span>${el.name}</span></p>
+        <p>User Name: <span>${el.username}</span></p>
+        <p>Email: <span>${el.email}</span></p>`
+
+        const btn=document.createElement("button")
+        btn.textContent="Add to Cart"
+        
+        box.append(btn)
+        box.className="box"
+
+        boxes.append(box)
+
+        btn.addEventListener("click", ()=>{
+
+            let obj={}
+            let localArr=JSON.parse(localStorage.getItem("localArr")) || []
+
+            let findUser=localArr.find((u)=> u.username===el.username);
+            if (findUser){
+                alert("User is already in cart")
+                return
+            }
+
+            obj["name"]=el.name
+            obj["username"]=el.username
+            obj["email"]=el.email
+
+            localArr.push(obj)
+
+            localStorage.setItem("localArr",JSON.stringify(localArr))
+
+            alert("User Added to Cart!")
+        })
+    })
+</script>

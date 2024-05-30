@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif, Arial, Helvetica
+        }
+        body{
+            padding: 12px;
+        }
+        .home{
+            color: black;
+            margin: 16px;
+        }
+        h5{
+            margin: 20px 16px;
+            font-size: 22px;
+            color: rgb(255, 41, 112);
+        }
+        .boxes{
+            margin-left: 16px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .box{
+            width: 300px;
+            box-shadow: 2px 3px 12px 0 grey;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        button{
+            margin-top: 12px;
+            color: #fff;
+            background-color: hotpink;
+            border: none;
+            padding: 4px 6px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .box>p:nth-child(2){
+            margin-top: 6px;
+        }
+        .box>p:nth-child(3){
+            margin-top: 6px;
+        }
+        span{
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <a class="home" href="index.html">Home</a>
+    <h5 id="cartProduct">Carts Items</h5>
+    <div class="boxes">
+    </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+
+        const boxes=document.getElementsByClassName("boxes")[0]
+        const cartProduct=document.getElementById("cartProduct")
+
+        let cartItems=JSON.parse(localStorage.getItem("localArr")) || []
+
+        if (cartItems.length===0){
+            cartProduct.innerHTML=`<p>Your Cart is Empty!</p>`
+            return
+        }
+        
+        cartItems.forEach((el) => {
+
+            const box=document.createElement("div")
+
+            box.innerHTML=
+            `<p>Name: <span>${el.name}</span></p>
+            <p>User Name: <span>${el.username}</span></p>
+            <p>Email: <span>${el.email}</span></p>
+            <button onclick="removeCartItem('${el.username}')">Delete</button>`;
+
+            box.className="box"
+            boxes.append(box)
+        });
+    })
+
+    function removeCartItem(username){
+
+        let cartItems=JSON.parse(localStorage.getItem("localArr")) || []
+
+        cartItems=cartItems.filter((el)=> (el.username!==username));
+
+        localStorage.setItem("localArr",JSON.stringify(cartItems))
+
+        location.reload()
+    }
+</script>
